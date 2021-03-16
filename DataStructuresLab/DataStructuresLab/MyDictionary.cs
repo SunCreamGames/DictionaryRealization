@@ -3,9 +3,9 @@ namespace DataStructuresLab
     using System;
     using System.Collections.Generic;
 
-    public class MyDictionary<ValueType>
+    public class MyDictionary<T>
     {
-        public LinkedList<Pair<ValueType>>[] HashTable { get; private set; }
+        public LinkedList<Pair<T>>[] HashTable { get; private set; }
         public int Capacity { get; private set; }
         public int Count { get; private set; }
 
@@ -14,19 +14,24 @@ namespace DataStructuresLab
         public MyDictionary(int capacity)
         {
             Capacity = capacity;
-            HashTable = new LinkedList<Pair<ValueType>>[Capacity];
+            HashTable = new LinkedList<Pair<T>>[Capacity];
             Count = 0;
+            InitHashTable();
         }
 
-        public void Set(string key, ValueType value)
+        private void InitHashTable()
+        {
+            for (var i = 0; i < Capacity; i++)
+            {
+                HashTable[i] = new LinkedList<Pair<T>>();
+            }
+        }
+
+        public void Set(string key, T value)
         {
             var preHash = HashFunc(key);
-            var pairToAdd = new Pair<ValueType>(key, value);
+            var pairToAdd = new Pair<T>(key, value);
 
-            if (HashTable[preHash] == null)
-            {
-                HashTable[preHash] = new LinkedList<Pair<ValueType>>();
-            }
 
             if (HashTable[preHash].Count == 0)
             {
@@ -52,11 +57,10 @@ namespace DataStructuresLab
             }
         }
 
-        public ValueType Get(string key)
+        public T Get(string key)
         {
             var preHash = HashFunc(key);
-            if (HashTable[preHash] == null ||
-                HashTable[preHash].Count == 0)
+            if (HashTable[preHash].Count == 0)
             {
                 Console.WriteLine($"The dictionary has no pair with this key : <color=red>{key}</color>");
                 return default;
@@ -79,7 +83,7 @@ namespace DataStructuresLab
 
         private void CheckForResize()
         {
-            if (Capacity * 0.75f < Count)
+            if (Capacity * 0.75f <= Count)
             {
                 Resize();
             }
@@ -87,6 +91,16 @@ namespace DataStructuresLab
 
         private void Resize()
         {
+            MyDictionary<T> newDict = new MyDictionary<T>(Capacity * 2);
+            for (var i = 0; i < Capacity; i++)
+            {
+                foreach (var pair in HashTable[i])
+                {
+                    newDict.Set(pair.Key, pair.Value);
+                }
+            }
+
+            HashTable = newDict.HashTable;
         }
 
         private int HashFunc(string key)
