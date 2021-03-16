@@ -62,7 +62,9 @@ namespace DataStructuresLab
             var preHash = HashFunc(key);
             if (HashTable[preHash].Count == 0)
             {
-                Console.WriteLine($"The dictionary has no pair with this key : <color=red>{key}</color>");
+                Console.WriteLine();
+                Console.WriteLine($"The dictionary has no pair with this key : {key}");
+                Console.WriteLine();
                 return default;
             }
 
@@ -71,7 +73,9 @@ namespace DataStructuresLab
             {
                 if (curPair.Next == null)
                 {
-                    Console.WriteLine($"The dictionary has no pair with this key : <color=red>{key}</color>");
+                    Console.WriteLine();
+                    Console.WriteLine($"The dictionary has no pair with this key : {key}");
+                    Console.WriteLine();
                     return default;
                 }
 
@@ -100,23 +104,22 @@ namespace DataStructuresLab
                 }
             }
 
+            Capacity = newDict.Capacity;
             HashTable = newDict.HashTable;
         }
 
-        private int HashFunc(string key)
+        private long HashFunc(string key)
         {
-            var stringKey = key.ToString();
-            var hash = 0;
-            for (var i = 0; i < stringKey.Length; i++)
+            uint hash = 0;
+            for (var i = 0; i < key.Length; i++)
             {
-                var c = stringKey[i];
-                var increment = ((int) c) * (int) Math.Pow(K, i);
+                var c = key[i];
+                uint increment = ((uint) c) * (uint) Math.Pow(K, i);
                 hash += increment;
             }
 
-            hash %= Capacity;
-            Console.WriteLine($"for key : {key.ToString()} hash is {hash}");
-            return hash;
+            var result = (long) hash % (uint) Capacity;
+            return result;
         }
     }
 
