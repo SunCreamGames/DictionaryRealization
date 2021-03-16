@@ -50,6 +50,30 @@ namespace DataStructuresLab
             }
         }
 
+        public ValueType Get(string key)
+        {
+            var preHash = HashFunc(key);
+            if (HashTable[preHash].Count == 0)
+            {
+                Console.WriteLine($"The dictionary has no pair with this key : <color=red>{key}</color>");
+                return default;
+            }
+
+            var curPair = HashTable[preHash].First;
+            while (curPair.Value.Key != key)
+            {
+                if (curPair.Next == null)
+                {
+                    Console.WriteLine($"The dictionary has no pair with this key : <color=red>{key}</color>");
+                    return default;
+                }
+
+                curPair = curPair.Next;
+            }
+
+            return curPair.Value.Value;
+        }
+
         private void CheckForResize()
         {
         }
