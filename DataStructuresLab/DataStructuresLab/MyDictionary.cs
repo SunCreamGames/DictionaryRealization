@@ -55,7 +55,8 @@ namespace DataStructuresLab
         public ValueType Get(string key)
         {
             var preHash = HashFunc(key);
-            if (HashTable[preHash].Count == 0)
+            if (HashTable[preHash] == null ||
+                HashTable[preHash].Count == 0)
             {
                 Console.WriteLine($"The dictionary has no pair with this key : <color=red>{key}</color>");
                 return default;
@@ -77,6 +78,14 @@ namespace DataStructuresLab
         }
 
         private void CheckForResize()
+        {
+            if (Capacity * 0.75f < Count)
+            {
+                Resize();
+            }
+        }
+
+        private void Resize()
         {
         }
 
