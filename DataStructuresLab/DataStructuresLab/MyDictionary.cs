@@ -9,6 +9,8 @@ namespace DataStructuresLab
         public int Capacity { get; private set; }
         public int Count { get; private set; }
 
+        private const int K = 253;
+
         public MyDictionary(int capacity)
         {
             Capacity = capacity;
@@ -80,7 +82,18 @@ namespace DataStructuresLab
 
         private int HashFunc(string key)
         {
-            return 0;
+            var stringKey = key.ToString();
+            var hash = 0;
+            for (var i = 0; i < stringKey.Length; i++)
+            {
+                var c = stringKey[i];
+                var increment = ((int) c) * (int) Math.Pow(K, i);
+                hash += increment;
+            }
+
+            hash %= Capacity;
+            Console.WriteLine($"for key : {key.ToString()} hash is {hash}");
+            return hash;
         }
     }
 
