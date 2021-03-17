@@ -28,7 +28,7 @@ namespace DataStructuresLab
         }
 
 
-        public void Set(string key, T value)
+        private void Set(string key, T value)
         {
             var preHash = HashFunc(key);
             var pairToAdd = new Pair<T>(key, value);
@@ -52,13 +52,15 @@ namespace DataStructuresLab
                         CheckForResize();
                         return;
                     }
+
+                    curPair = curPair.Next;
                 }
 
                 curPair.Value = pairToAdd;
             }
         }
 
-        public T Get(string key)
+        private T Get(string key)
         {
             var preHash = HashFunc(key);
             if (HashTable[preHash].Count == 0)
