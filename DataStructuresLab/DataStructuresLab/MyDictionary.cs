@@ -27,6 +27,7 @@ namespace DataStructuresLab
             }
         }
 
+
         public void Set(string key, T value)
         {
             var preHash = HashFunc(key);
@@ -85,6 +86,20 @@ namespace DataStructuresLab
             return curPair.Value.Value;
         }
 
+        private long HashFunc(string key)
+        {
+            uint hash = 0;
+            for (var i = 0; i < key.Length; i++)
+            {
+                var c = key[i];
+                uint increment = ((uint) c) * (uint) Math.Pow(K, i);
+                hash += increment;
+            }
+
+            var result = (long) hash % (uint) Capacity;
+            return result;
+        }
+
         private void CheckForResize()
         {
             if (Capacity * 0.75f <= Count)
@@ -108,18 +123,11 @@ namespace DataStructuresLab
             HashTable = newDict.HashTable;
         }
 
-        private long HashFunc(string key)
-        {
-            uint hash = 0;
-            for (var i = 0; i < key.Length; i++)
-            {
-                var c = key[i];
-                uint increment = ((uint) c) * (uint) Math.Pow(K, i);
-                hash += increment;
-            }
 
-            var result = (long) hash % (uint) Capacity;
-            return result;
+        public T this[string key]
+        {
+            get => Get(key);
+            set => Set(key, value);
         }
     }
 
