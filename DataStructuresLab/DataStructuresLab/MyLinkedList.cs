@@ -9,8 +9,7 @@ namespace DataStructuresLab
     {
         Node<T> head;
         Node<T> tail;
-        public int count { get; set; }
-        public int Count { get { return count; } }
+        public int Count { get; private set; }
 
         public void Add(T value)
         {
@@ -23,7 +22,7 @@ namespace DataStructuresLab
                 node.Previous = tail;
             }
             tail = node;
-            count++;
+            Count++;
         }
         public void AddFirst(T value)
         {
@@ -39,7 +38,7 @@ namespace DataStructuresLab
             {
                 temp.Previous = node;
             }
-            count++;
+            Count++;
         }
         public Node<T> GetFirst()
         {
@@ -60,7 +59,7 @@ namespace DataStructuresLab
         {
             head = null;
             tail = null;
-            count = 0;
+            Count = 0;
         }
         public void Remove(T value)
         {
@@ -91,7 +90,7 @@ namespace DataStructuresLab
                 {
                     head = current.Next;
                 }
-                count--;
+                Count--;
             }
         }
         public void RemoveFirst()
