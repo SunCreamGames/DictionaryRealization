@@ -5,7 +5,7 @@ namespace DataStructuresLab
 
     public class MyDictionary<T>
     {
-        public MyLinkedList<Pair<T>>[] HashTable { get; private set; }
+        private MyLinkedList<Pair<T>>[] HashTable { get; set; }
         public int Capacity { get; private set; }
         public int Count { get; private set; }
 
@@ -115,9 +115,11 @@ namespace DataStructuresLab
             MyDictionary<T> newDict = new MyDictionary<T>(Capacity * 2);
             for (var i = 0; i < Capacity; i++)
             {
-                foreach (var pair in HashTable[i])
+                while (HashTable[i].Count > 0)
                 {
-                    newDict.Set(pair.Key, pair.Value);
+                    var pair = HashTable[i].GetFirst().Value;
+                    newDict[pair.Key] = pair.Value;
+                    HashTable[i].RemoveFirst();
                 }
             }
 
