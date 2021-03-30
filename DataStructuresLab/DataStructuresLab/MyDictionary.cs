@@ -5,7 +5,7 @@ namespace DataStructuresLab
 
     public class MyDictionary<T>
     {
-        public LinkedList<Pair<T>>[] HashTable { get; private set; }
+        public MyLinkedList<Pair<T>>[] HashTable { get; private set; }
         public int Capacity { get; private set; }
         public int Count { get; private set; }
 
@@ -14,7 +14,7 @@ namespace DataStructuresLab
         public MyDictionary(int capacity)
         {
             Capacity = capacity;
-            HashTable = new LinkedList<Pair<T>>[Capacity];
+            HashTable = new MyLinkedList<Pair<T>>[Capacity];
             Count = 0;
             InitHashTable();
         }
@@ -23,7 +23,7 @@ namespace DataStructuresLab
         {
             for (var i = 0; i < Capacity; i++)
             {
-                HashTable[i] = new LinkedList<Pair<T>>();
+                HashTable[i] = new MyLinkedList<Pair<T>>();
             }
         }
 
@@ -36,18 +36,18 @@ namespace DataStructuresLab
 
             if (HashTable[preHash].Count == 0)
             {
-                HashTable[preHash].AddLast(pairToAdd);
+                HashTable[preHash].Add(pairToAdd);
                 Count++;
                 CheckForResize();
             }
             else
             {
-                var curPair = HashTable[preHash].First;
+                var curPair = HashTable[preHash].GetFirst();
                 while (curPair.Value.Key != pairToAdd.Key)
                 {
                     if (curPair.Next == null)
                     {
-                        HashTable[preHash].AddLast(pairToAdd);
+                        HashTable[preHash].Add(pairToAdd);
                         Count++;
                         CheckForResize();
                         return;
@@ -71,7 +71,7 @@ namespace DataStructuresLab
                 return default;
             }
 
-            var curPair = HashTable[preHash].First;
+            var curPair = HashTable[preHash].GetFirst();
             while (curPair.Value.Key != key)
             {
                 if (curPair.Next == null)
