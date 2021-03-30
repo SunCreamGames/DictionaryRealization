@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace DataStructuresLab
 {
@@ -6,7 +7,14 @@ namespace DataStructuresLab
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            MyDictionary<string> dictionary = new MyDictionary<string>(98215);
+            DictionaryParser parser = new DictionaryParser();
+            parser.SetDictionary(ref dictionary);
+            Console.Write("Type a sentence to get definition: ");
+            string key = Console.ReadLine();
+            key.ToLower();
+            Console.WriteLine();
+            Console.WriteLine(dictionary.Get(key));
         }
     }
 }
