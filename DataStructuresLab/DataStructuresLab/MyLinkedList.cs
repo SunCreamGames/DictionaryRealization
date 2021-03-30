@@ -23,7 +23,7 @@ namespace DataStructuresLab
                 node.Previous = tail;
             }
             tail = node;
-            Count++;
+            count++;
         }
         public void AddFirst(T value)
         {
@@ -39,7 +39,7 @@ namespace DataStructuresLab
             {
                 temp.Previous = node;
             }
-            Count++;
+            count++;
         }
         public Node<T> GetFirst()
         {
@@ -61,6 +61,54 @@ namespace DataStructuresLab
             head = null;
             tail = null;
             count = 0;
+        }
+        public void Remove(T value)
+        {
+            Node<T> current = head;
+            while (current != null)
+            {
+                if (current.Value.Equals(value))
+                {
+                    break;
+                }
+                current = current.Next;
+            }
+            if (current != null)
+            {
+                if (current.Next != null)
+                {
+                    current.Next.Previous = current.Previous;
+                }
+                else
+                {
+                    tail = current.Previous;
+                }
+                if (current.Previous != null)
+                {
+                    current.Previous.Next = current.Next;
+                }
+                else
+                {
+                    head = current.Next;
+                }
+                count--;
+            }
+        }
+        public void RemoveFirst()
+        {
+            if (head.Next != null)
+            {
+                head.Next.Previous = head.Previous;
+                head = head.Next;
+            }
+        }
+        public void RemoveLast()
+        {
+            if (tail.Previous != null) 
+            {
+                tail.Previous.Next = tail.Next;
+                tail = tail.Previous;
+            }
         }
     }
     public class Node<T>
