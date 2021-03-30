@@ -9,7 +9,8 @@ namespace DataStructuresLab
     {
         Node<T> head;
         Node<T> tail;
-        public int Count { get; set; }
+        public int count { get; set; }
+        public int Count { get { return count; } }
 
         public void Add(T value)
         {
@@ -43,6 +44,23 @@ namespace DataStructuresLab
         public Node<T> GetFirst()
         {
             return head;
+        }
+        public bool Contains(T value)
+        {
+            Node<T> current = head;
+            while (current != null)
+            {
+                if (current.Value.Equals(value))
+                    return true;
+                current = current.Next;
+            }
+            return false;
+        }
+        public void Clear()
+        {
+            head = null;
+            tail = null;
+            count = 0;
         }
     }
     public class Node<T>
