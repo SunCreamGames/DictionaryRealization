@@ -11,10 +11,12 @@ namespace DataStructuresLab
             DictionaryParser parser = new DictionaryParser();
             parser.SetDictionary(ref dictionary);
             Console.Write("Type a sentence to get definition: ");
-            string key = Console.ReadLine();
-            key.ToLower();
-            Console.WriteLine();
-            Console.WriteLine(dictionary.Get(key.ToUpper()));
+            var lines = Console.ReadLine().Split(" ");
+            foreach (var line in lines)
+            {
+                Console.WriteLine();
+                Console.WriteLine(dictionary.Get(line.ToUpper()));
+            }
         }
     }
 }
