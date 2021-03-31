@@ -99,6 +99,11 @@ namespace DataStructuresLab
             {
                 head.Next.Previous = head.Previous;
                 head = head.Next;
+                Count--;
+            }
+            else
+            {
+                Clear();
             }
         }
         public void RemoveLast()
@@ -107,6 +112,11 @@ namespace DataStructuresLab
             {
                 tail.Previous.Next = tail.Next;
                 tail = tail.Previous;
+                Count--;
+            }
+            else
+            {
+                Clear();
             }
         }
     }

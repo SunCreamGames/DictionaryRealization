@@ -14,7 +14,7 @@ namespace DataStructuresLab
             string key = Console.ReadLine();
             key.ToLower();
             Console.WriteLine();
-            Console.WriteLine(dictionary.Get(key));
+            Console.WriteLine(dictionary.Get(key.ToUpper()));
         }
     }
 }
