@@ -47,20 +47,6 @@ namespace DataStructuresLab
                 Console.WriteLine();
                 return default;
             }
-
-            var curPair = HashTable[preHash].GetFirst();
-            while (curPair.Value.Key != key)
-            {
-                if (curPair.Next == null)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"The dictionary has no pair with this key : {key}");
-                    Console.WriteLine();
-                    return default;
-                }
-
-                curPair = curPair.Next;
-            }
             List<T> Pairs = new List<T>();
             var pair = HashTable[preHash].GetFirst();
             for (int i = 0; i < HashTable[preHash].Count; i++)
@@ -71,8 +57,11 @@ namespace DataStructuresLab
                 }
                 pair = pair.Next;
             }
-
-            return Pairs.ToArray();
+            if (Pairs.Count != 0)
+                return Pairs.ToArray();
+            else
+                Console.WriteLine($"The dictionary has no pair with this key : {key}");
+            return default;
         }
 
         private long HashFunc(string key)
