@@ -9,7 +9,7 @@ namespace DataStructuresLab
     {
         public void SetDictionary(ref MyDictionary<string> dictionary)
         {
-            StreamReader sr = new StreamReader("dict_processed.txt");
+            StreamReader sr = new StreamReader("test.txt");
             while(!sr.EndOfStream)
             {
                 string line = sr.ReadLine();

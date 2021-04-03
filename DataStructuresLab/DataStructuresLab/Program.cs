@@ -15,7 +15,12 @@ namespace DataStructuresLab
             foreach (var line in lines)
             {
                 Console.WriteLine();
-                Console.WriteLine(dictionary.Get(line.ToUpper()));
+                var values = dictionary[line.ToUpper()];
+                for (int i = 0; i < values.Length; i++)
+                {
+                    Console.Write(values[i]+"\t");
+                }
+                Console.WriteLine();
             }
         }
     }

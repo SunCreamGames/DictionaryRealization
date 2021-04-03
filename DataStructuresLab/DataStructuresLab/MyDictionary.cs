@@ -32,35 +32,12 @@ namespace DataStructuresLab
         {
             var preHash = HashFunc(key);
             var pairToAdd = new Pair<T>(key, value);
-
-
-            if (HashTable[preHash].Count == 0)
-            {
-                HashTable[preHash].Add(pairToAdd);
-                Count++;
-                CheckForResize();
-            }
-            else
-            {
-                var curPair = HashTable[preHash].GetFirst();
-                while (curPair.Value.Key != pairToAdd.Key)
-                {
-                    if (curPair.Next == null)
-                    {
-                        HashTable[preHash].Add(pairToAdd);
-                        Count++;
-                        CheckForResize();
-                        return;
-                    }
-
-                    curPair = curPair.Next;
-                }
-
-                curPair.Value = pairToAdd;
-            }
+            HashTable[preHash].Add(pairToAdd);
+            Count++;
+            CheckForResize();
         }
 
-        public T Get(string key)
+        private T[] Get(string key)
         {
             var preHash = HashFunc(key);
             if (HashTable[preHash].Count == 0)
@@ -84,8 +61,18 @@ namespace DataStructuresLab
 
                 curPair = curPair.Next;
             }
+            List<T> Pairs = new List<T>();
+            var pair = HashTable[preHash].GetFirst();
+            for (int i = 0; i < HashTable[preHash].Count; i++)
+            {
+                if (pair.Value.Key == key)
+                {
+                    Pairs.Add(pair.Value.Value);
+                }
+                pair = pair.Next;
+            }
 
-            return curPair.Value.Value;
+            return Pairs.ToArray();
         }
 
         private long HashFunc(string key)
@@ -118,7 +105,7 @@ namespace DataStructuresLab
                 while (HashTable[i].Count > 0)
                 {
                     var pair = HashTable[i].GetFirst().Value;
-                    newDict[pair.Key] = pair.Value;
+                    newDict.Set(pair.Key, pair.Value);
                     HashTable[i].RemoveFirst();
                 }
             }
@@ -127,11 +114,9 @@ namespace DataStructuresLab
             HashTable = newDict.HashTable;
         }
 
-
-        public T this[string key]
+        public T[] this[string key]
         {
             get => Get(key);
-            set => Set(key, value);
         }
     }
 
